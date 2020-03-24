@@ -11,36 +11,43 @@ class Note extends React.Component {
     this.props.submitNote(formData, this.props.note.id);
   }
 
-  renderTagForm() {
-  if (!this.props.newTag) {
-    return (
-      <span>
-        Tag your note:
-        <i
-          className="tag-button material-icons"  
-          onClick={() => this.props.showTagForm()}
-        >
-          add circle
-        </i>
-      </span>
-    );
-  } else {
-    return (
-      <form>
-        <input
-          className="tag-input"
-          type="text"
-          placeholder="Tag Name..."
-         />
-      </form>
-    );
+  onTagSubmit(e) {
+    e.preventDefault();
+    const formData = {
+      name: this.name.value
+    };
+    this.props.submitTag(formData, this.props.note.id)
+    this.props.closeTagForm();
   }
-}
 
- render() {
-  const { note } = this.props;
+  renderTagForm(note) {
+   if (note.id !== undefined)
+    if (!this.props.newTag) {
+      return (
+        <span>
+          Tag your note:
+          <i className="tag-button material-icons"  onClick={() => this.props.showTagForm()}>add circle</i>
+        </span>
+      );
+    } else {
+      return (
+        <form onSubmit={(e) => this.onTagSubmit(e)}>
+          <input
+            className="tag-input"
+            type="text"
+            placeholder="Tag Name..."
+            ref={(input) => this.name = input}
+           />
+        </form>
+      );
+    }
+   }
+  }
 
-  return (
+  render() {
+    const { note } = this.props;
+
+    return (
       <div className="note-container">
         <form className="note-form" onSubmit={(e) => this.onSubmit(e)}>
           <input
@@ -60,11 +67,12 @@ class Note extends React.Component {
         </form>
         <div className="tag-container">
           <div className="tag-button-container">
-            {this.renderTagForm()}
+            {this.renderTagForm(note)}
           </div>
         </div>
       </div>
     );
   }
+}
 
 export default Note;
