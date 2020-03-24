@@ -17,8 +17,8 @@ class App extends Component {
 
   toggleNote = () => {
     this.setState({
-      showNote: ! this.state.showNote
-    })
+      showNote: !this.state.showNote
+    });
   }
 
   getNotes = () => {
@@ -27,23 +27,30 @@ class App extends Component {
     .catch((err) => console.log(err.response.data) );
   }
 
-  render() {
-  const { showNote, notes } = this.state;
+  getNote = () => {
+    console.log('Clicked!')
+  }
 
-  return (
-    <div className="App">
-      <Nav toggleNote={this.toggleNote} showNote={showNote} />
-      {showNote ?
-        <Note />
-        :
-        <List
-          getNotes={this.getNotes}
-          notes={notes}
-        />
-      }
-    </div>
-  );
- }
+  render() {
+    const { showNote, notes } = this.state;
+
+    return (
+      <div className="App">
+        <Nav toggleNote={this.toggleNote} showNote={showNote} />
+        {showNote ?
+          <Note />
+          :
+          <List
+            getNotes={this.getNotes}
+            notes={notes}
+            getNote={this.getNote}
+          />
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
+ 
+ 
