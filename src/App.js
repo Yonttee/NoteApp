@@ -12,22 +12,22 @@ class App extends Component {
     this.state = {
       showNote: false,
       notes: [],
-      note: {}
+      note: {},
+      newTag: false
     };
   }
 
   toggleNote = () => {
-  this.setState({
-    showNote: ! this.state.showNote,
-    note: {}
-  });
-}
+    this.setState({
+      showNote: ! this.state.showNote,
+      note: {}
+    });
+  }
 
   getNotes = () => {
     axios.get(urlFor('notes'))
     .then((res) => this.setState({ notes: res.data }) )
     .catch((err) => console.log(err.response.data) );
-
   }
 
   getNote = (id) => {
@@ -49,7 +49,7 @@ class App extends Component {
     .then((res) => this.setState({ showNote: false }) )
     .catch((err) => console.log(err.response.data) );
   }
-  
+
   deleteNote = (id) => {
     const newNotesState = this.state.notes.filter((note) => note.id !== id );
     axios.delete(urlFor(`notes/${id}`))
@@ -57,8 +57,12 @@ class App extends Component {
     .catch((err) => console.log(err.response.data) );
   }
 
+  showTagForm = () => {
+    this.setState({ newTag: true });
+  }
+
   render() {
-    const { showNote, notes, note } = this.state;
+    const { showNote, notes, note, newTag } = this.state;
 
     return (
       <div className="App">
@@ -67,7 +71,9 @@ class App extends Component {
           <Note
             note={note}
             submitNote={this.submitNote}
-           />
+            showTagForm={this.showTagForm}
+            newTag={newTag}
+          />
           :
           <List
             getNotes={this.getNotes}
@@ -82,4 +88,3 @@ class App extends Component {
 }
 
 export default App;
- 
