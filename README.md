@@ -1,3 +1,10 @@
+## NOTEAPP
+Built using ReactJS
+## Objective
+A simple NoteApp that will allow users to keep track of notes, 
+including creating, updating, and deleting them, as well as adding labels (tags) to them
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
